@@ -1,0 +1,88 @@
+Clay Analysis Project
+
+This project encompasses a suite of Python scripts designed to analyze soil data, classify soil types, visualize soil properties, and investigate clay compaction behavior. It caters to researchers and engineers working in geotechnical engineering and related fields.
+
+Features:
+
+Soil Classification and Analysis (clay_ins_class_stats.py):
+Loads and preprocesses soil composition data.
+Classifies soil types based on composition using relevant criteria.
+Calculates additional soil parameters based on provided data.
+Generates informative visualizations:
+Soil classification triangle
+Histograms for individual soil properties
+Pair plots to explore correlations
+Correlation heatmaps
+Plasticity chart
+
+Clay Compaction Analysis (clay_compaction_stats.py):
+Analyzes clay compaction data related to geotechnical engineering.
+Performs data cleaning and preparation.
+Calculates derived soil properties like porosity, void ratio, and air content.
+Analyzes the relationship between moisture content and bulk/dry density considering air content.
+Generates visualizations:
+Compaction curves with air content lines as references.
+Distribution analysis for various soil properties.
+Correlation heatmap to understand relationships between parameters.
+
+Triaxial Test Data Analysis (triaxial_stats.py):
+Analyzes data from triaxial tests on soils.
+Cleans and preprocesses the data.
+Performs distribution analysis for individual soil properties.
+Investigates pairwise correlations between soil characteristics.
+Generates visualizations for individual soil types:
+Histograms and fitted distributions for each property.
+Scatter plots with regression lines and R-squared values for pairwise relationships.
+Correlation heatmaps to visualize correlations within each soil type.
+Requirements:
+
+Python 3.x
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+sklearn (for clay_ins_class_stats.py only)
+shapely (for clay_ins_class_stats.py only)
+Usage:
+
+Ensure all required libraries are installed (pip install <library_name>)
+
+Place your soil data CSV files in the appropriate directories for each script.
+
+Update the file_path variable in the main scripts with the path to your respective CSV file.
+
+Run the main script:
+
+Bash
+python clay_ins_class_stats.py  # for soil classification and analysis
+python clay_compaction.py  # for clay compaction analysis
+python triaxial_data_analysis.py  # for triaxial test data analysis
+Use code with caution.
+
+Data Format:
+
+Soil Classification and Analysis (clay_ins_class_stats.py):
+
+The input CSV file should contain the following columns:
+
+Clay content
+Silt content
+Sand content
+Salt content
+Organic content
+Mass loss
+Liquid limit
+Plastic limit
+Plasticity index
+Clay Compaction Analysis (clay_compaction.py):
+
+The input CSV file should be specified in the script. It's expected to contain relevant columns for clay compaction analysis.
+
+Triaxial Test Data Analysis (triaxial_data_analysis.py):
+
+The input Excel file (triaxial.xlsx) should contain data from triaxial tests on soils.
+
+Output:
+
+Each script generates several plots and visualizations based on the analysis performed. The specific output files will vary depending on the script and data provided.
