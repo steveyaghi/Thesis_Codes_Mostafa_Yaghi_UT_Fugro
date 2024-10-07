@@ -1,0 +1,12 @@
+Imortant excel files
+Clay_compaction_ML : original data for ML applications
+Clay_ins_ML : Original data clay inspection for ML application
+Clay_tri_F : Original data triaxial
+Combined_NT : combined dataset using neural network
+Combined_RF : combined dataset using random forest
+COMBINED_Auto_encoded_NT : combined auto encoded data set NN
+COMBINED_Auto_encoded_RF: combined auto encoeded data set using Rf
+RF_results_with_scenarios_corrected_S_NEWCLASS_PI : results of RF on all datasets using each scenario (look sheets)
+(includes the results of the new scenario)
+Comp and CompA made to compare results. some are used in python codes.
+results_NN_modified : Results of NN on the dataset using each scenario (does not include the combined scenario)

@@ -1,0 +1,396 @@
+ATTENTION: FOR THE OPTEMIZING CODES YOU NEED TO DOWNLOAD THE OPTUNA PACKAGE AND USE THE MS VISUAL STUDIO CODE< THEN DOWNLOAD THE OPTUNA EXTENSION TO BE ABLE TO VISUALZE THE RESULTS OF THE OTEMZATION PROCESS VIA OPTUNA DASHBOAD. FOR MORE INFORMATION PLEASE VISIT THE OPTUNA DOCUMENTATION https://optuna-dashboard.readthedocs.io/en/latest/getting-started.html
+the results are going to be a SQL database which the tool visualize, there is also an SQL database in the file called db.sqlite3
+--------------------------------------------------------------------------------------------------
+For optimizing the Random forest use the code: 01 Optemizing_singleobj_Random_Forest_R2
+
+
+
+This Python script defines functions for optimizing a Random Forest regressor using Optuna for a single objective (R-squared). It focuses on a specific dataset related to clay compaction (CC) and triaxial testing (CT).
+
+Key functionalities:
+
+Data loading and preprocessing:
+Loads data from multiple excel files (clay compaction, clay properties, autoencoded clay properties, and triaxial data).
+Performs data cleaning by dropping irrelevant columns, handling missing values, and one-hot encoding categorical variables.
+Applies separate encodings for clay compaction and triaxial data.
+Standardizes non-encoded numerical features using StandardScaler.
+Hyperparameter optimization:
+Defines an objective function that takes a trial object and data information as input.
+Suggests hyperparameters for the Random Forest model using Optuna's functionalities:
+n_estimators: Number of trees in the forest (100-1000).
+max_depth: Maximum depth of each tree (2-32, log-scaled).
+min_samples_split: Minimum number of samples required to split an internal node (2-10).
+min_samples_leaf: Minimum number of samples required to be at a leaf node (1-10).
+max_features: Number of features to consider at each split ("sqrt" or "log2").
+max_samples: Proportion of samples drawn with replacement from the dataset to train each tree (0.1-1.0).
+Handles NaN values during training and prediction.
+Evaluates model performance using R-squared score on the test set.
+Returns both the mean R-squared and a list of R-squared scores for each dependent variable.
+Optimization and visualization:
+Defines an optimize_random_forest function that takes the data, dependent and independent variable columns, and the number of trials as input.
+Uses Optuna to create or load a study with a specific name based on the data and variables used.
+Wraps the objective function with logging to store all R-squared scores from each trial.
+Runs the optimization for the specified number of trials.
+Calculates and prints the average R-squared across all trials.
+Provides visualization functions for:
+Optimization history (convergence plot).
+Feature importances.
+Parameter space exploration (contour and parallel coordinate plots).
+Calls the visualization functions with the resulting Optuna study object.
+Plotting individual R-squared scores:
+Defines a plot_individual_r2_scores function to visualize the mean R-squared for each dependent variable.
+Note:
+
+The script currently focuses on optimizing for the CC dataset (independent_var_columns = ['dry_unit_weight']). You can easily modify this to optimize for the CT dataset by changing the variable names.
+Experiment with different independent variable combinations to find the best predictors for your dependent variables.
+Libraries used:
+
+numpy
+pandas
+sklearn (preprocessing, model_selection, metrics, ensemble)
+optuna
+matplotlib
+openpyxl
+How to use:
+
+Modify the independent_var_columns list to specify the features you want to use for prediction based on your dataset (CC or CT).
+Ensure you have the required libraries installed (pip install numpy pandas sklearn optuna matplotlib openpyxl).
+Run the script: python optimizing_single_objective_Random_forest.py
+This script will optimize the Random Forest model for your chosen dataset and variables, visualize the optimization process and feature importances, and provide the best hyperparameter configuration and individual R-squared scores for each dependent variable.
+
+--------------------------------------------------------------------------------------------------
+To optimizing the NN use the code: use the code: 02 Optemizing_SingleObj_neural_network_R2
+
+Readme for Neural_Network_Optuna_Single_Objective.py
+This Python script defines functions for optimizing a neural network using Optuna for a single objective (R-squared) in the context of clay compaction (CC) and triaxial testing (CT) data.
+
+Key functionalities:
+
+Data loading and preprocessing:
+Loads data from multiple excel files (clay compaction, clay properties, autoencoded clay properties, and triaxial data).
+Performs data cleaning by dropping irrelevant columns, handling missing values, and one-hot encoding categorical variables.
+Applies separate encodings for CC and CT data.
+Standardizes non-encoded numerical features using StandardScaler.
+Hyperparameter optimization:
+Defines an objective function that takes a trial object and data information as input.
+Suggests hyperparameters for the neural network using Optuna:
+learning_rate: Learning rate of the optimizer (1e-4 to 1e-3, log-scaled).
+epochs: Number of training epochs (800-1200).
+num_layers: Number of hidden layers in the network (5-12).
+units_per_layer: Number of neurons in each hidden layer (150-300).
+activation: Activation function for hidden layers (default: "relu").
+dropout_rate: Dropout rate for regularization (0.3-0.55).
+batch_size: Size of batches for training (32-128).
+Handles NaN values during training and prediction.
+Evaluates model performance using R-squared score on the test set for each dependent variable.
+Returns both the mean R-squared and a list of R-squared scores for each dependent variable.
+Optimization and visualization:
+Defines an optimize_neural_network function that takes the data, dependent and independent variable columns, and the number of trials as input.
+Uses Optuna to create or load a study with a specific name based on the data and variables used.
+Wraps the objective function with logging to store individual R-squared scores for each trial.
+Runs the optimization for the specified number of trials.
+Calculates and prints the average R-squared across all trials.
+Provides visualization functions for:
+Optimization history (convergence plot).
+Feature importances for the neural network.
+Parameter space exploration (contour and parallel coordinate plots).
+Calls the visualization functions with the resulting Optuna study object.
+Plotting individual R-squared scores:
+Defines a plot_individual_r2_scores function to visualize the mean R-squared for each dependent variable.
+Excel logging:
+append_to_excel function allows appending optimization results (R-squared scores and independent variable combinations) to a user-specified excel file for record-keeping.
+Note:
+
+The script currently focuses on optimizing for the CC dataset (independent_var_columns = ['water_content']). You can easily modify this to optimize for the CT dataset by changing the variable names in the function call.
+Experiment with different independent variable combinations to find the best predictors for your dependent variables.
+Libraries used:
+
+numpy
+pandas
+matplotlib.pyplot
+sklearn (preprocessing, model_selection, metrics, ensemble)
+optuna
+tensorflow
+tensorflow_probability
+seaborn
+openpyxl
+How to use:
+
+Modify the independent_var_columns list at the bottom to specify the features you want to use for prediction based on your dataset (CC or CT).
+Ensure you have the required libraries installed (pip install numpy pandas sklearn optuna tensorflow tensorflow_probability seaborn openpyxl).
+Run the script: python Neural_Network_Optuna_Single_Objective.py
+This script will optimize the neural network for your chosen dataset and variables, visualize the optimization process and feature importances, and provide the best hyperparameter configuration, individual R-squared scores for each dependent variable, and log the results to an excel file (if specified).
+
+--------------------------------------------------------------------------------------------------
+For optimizing the Auto-encoder : use 03 Auto_encoder_optemizer 
+
+Readme for Autoencoder_CI.py
+This Python script performs dimensionality reduction on clay properties data (CI) using an autoencoder optimized with Optuna. It then visualizes the reconstruction results and saves them to an Excel file.
+
+Key functionalities:
+
+Data loading and cleaning:
+
+Loads data from three excel files ("clay_compaction_ML.xlsx", "Clay_ins_ML.xlsx", and "Clay_Tri_F.xlsx").
+Focuses on the CI data (Clay_ins_ML.xlsx).
+Drops irrelevant columns for performance improvement.
+Handles missing values in the "q" column of CT data by filling with the difference between sigma_1 and sigma_3.
+One-hot encodes the "class%" and "activity_class" columns in CI data.
+Creates separate encoded columns for easier handling.
+Removes rows with "other" class in CI data.
+Checks for non-numeric data types in CI and CI_test datasets.
+Autoencoder optimization:
+
+Defines an objective function that takes an Optuna trial object and data information as input.
+Optimizes hyperparameters for the autoencoder model using Optuna:
+encoding_dim: Dimensionality of the encoded representation (1 to input_dim // 5, integer).
+activation: Activation function for hidden layer ("relu" is the default).
+optimizer: Optimizer for training ("adam" is the default).
+epochs: Number of training epochs (800-1200).
+batch_size: Size of batches for training (16, 32, or 64).
+Logs training and validation loss for each epoch during optimization.
+Uses optuna.storages.RDBStorage to manage the Optuna study and avoid redundant computations.
+Defines a study_name for identifying the Optuna study.
+Loads existing studies for efficiency or creates new ones based on the data and encoding used.
+Runs Optuna optimization with a specified number of trials (default: 100).
+Retrieves and prints the best hyperparameter configuration.
+Autoencoder training and evaluation:
+
+Defines an autoencoder model with the best hyperparameters from Optuna.
+Trains the model on the training data with validation data for monitoring.
+Predicts on the test data using the trained autoencoder.
+Calculates R-squared scores for each feature between the original and reconstructed values in the test set.
+Visualization and logging:
+
+Creates scatter plots comparing original and reconstructed values for each feature in the test data.
+Displays the R-squared score on each plot.
+Saves the reconstructed data (original and reconstructed values) to a specified Excel file with a dynamically generated sheet name based on the study name.
+Note:
+
+This script can be easily modified to use different excel file paths or focus on other datasets (CC or CT) by changing variable names in function calls.
+Experiment with different Optuna trial configurations for hyperparameter optimization.
+Consider including additional visualizations or evaluation metrics based on your needs.
+Libraries used:
+
+numpy
+pandas
+matplotlib.pyplot
+sklearn (preprocessing, model_selection, metrics)
+optuna
+tensorflow
+tensorflow_probability
+seaborn
+openpyxl
+How to use:
+
+Ensure you have the required libraries installed (pip install numpy pandas sklearn optuna tensorflow tensorflow_probability seaborn openpyxl).
+Modify the excel_file variable at the bottom to specify the desired output Excel file path.
+Run the script: python Autoencoder_CI.py
+This script will perform autoencoder training on CI data, visualize the reconstruction results, and save them to the specified Excel file.
+
+--------------------------------------------------------------------------------------------------
+to auto-encode the Clay compaction data set: use 04 Auto_encoder_CC_model_with_xlsx_extraction
+
+Readme for CC_Autoencoder.py
+This Python script performs dimensionality reduction and reconstruction on clay compaction (CC) data using an autoencoder model with TensorFlow and Keras. It then calculates and visualizes various evaluation metrics to assess the reconstruction quality.
+
+Key functionalities:
+
+Data loading and preprocessing:
+Loads data from the "clay_compaction_ML.xlsx" Excel file.
+Filters CC data to include only samples with a degree of compaction greater than or equal to 97%.
+Drops irrelevant columns for performance improvement.
+Replaces missing values (NaNs) in the CC data with the column means.
+Standardizes the features in the CC data using StandardScaler for better model training.
+Autoencoder model definition:
+Defines an autoencoder model with the following architecture:
+Input layer with a dimension matching the number of features in the CC data.
+Two hidden layers with 128 neurons each, using ReLU activation for non-linearity.
+Batch normalization layer after the first hidden layer to improve training stability.
+Dropout layer (20%) after the first hidden layer to prevent overfitting.
+A bottleneck layer with 3 neurons (encoding dimension) using ReLU activation.
+Two dense layers to reconstruct the input data, mirroring the first half of the model with appropriate dimension changes.
+Output layer with a linear activation to match the original feature scaling.
+Compiles the model using the Adam optimizer and mean squared error (MSE) loss function.
+Autoencoder training and evaluation:
+Implements a constant learning rate scheduler (0.001) for simplicity.
+Trains the autoencoder on the standardized CC data with a validation split of 20% for monitoring performance during training.
+Predicts on the training data using the trained autoencoder.
+Inverts the standardization to obtain reconstructed data on the original scale.
+Checks for remaining NaNs in the reconstructed data and fills them with 0 if necessary.
+Creates DataFrames for original and reconstructed CC data with appropriate column names.
+Calculates and prints the Mean Squared Error (MSE) and Mean Absolute Error (MAE) for each feature between the original and reconstructed values.
+Calculates and prints the R-squared score for each feature (if possible, handling potential errors).
+Visualization:
+Creates scatter plots comparing original and reconstructed values for each feature in the CC data (3 features per plot).
+Overlays the R-squared score (or "N/A" if unavailable) on each plot title for reference.
+Creates separate scatter plots for the residuals (difference between original and reconstructed values) for each feature.
+Adds a horizontal line at y=0 (perfect reconstruction) to the residual plots for visualization.
+Note:
+
+This script can be modified to use a different data source (e.g., CI.xlsx) by changing the filename in the pd.read_excel call.
+Experiment with different autoencoder architectures and hyperparameters to improve reconstruction quality.
+Consider including additional evaluation metrics or visualizations based on your needs.
+Libraries used:
+
+numpy
+pandas
+matplotlib.pyplot
+sklearn.preprocessing (StandardScaler)
+sklearn.metrics (mean_squared_error, mean_absolute_error, r2_score)
+tensorflow
+tensorflow.keras (layers, Model, LearningRateScheduler)
+How to use:
+
+Ensure you have the required libraries installed (pip install numpy pandas matplotlib sklearn tensorflow tensorflow-keras).
+Run the script: python CC_Autoencoder.py
+This script will perform autoencoder training on CC data, evaluate the reconstruction performance, and generate various plots for visualization.
+--------------------------------------------------------------------------------------------------
+to auto-encode the Clay inspection data set: use 05 Auto_encoder_CC_model_with_xlsx_extraction
+
+This Python script performs dimensionality reduction and reconstruction on clay insulation (CI) data using an autoencoder model with TensorFlow and Keras. It then calculates and visualizes various evaluation metrics to assess the reconstruction quality.
+
+Key functionalities:
+
+Data loading and preprocessing:
+
+Loads data from three Excel files: "clay_compaction_ML.xlsx" (potentially for reference, not used in this script), "Clay_ins_ML.xlsx" (main CI data), and "Clay_Tri_F.xlsx" (not used in this script).
+Drops irrelevant columns in CI data to improve efficiency.
+Filters CI data to include only samples with a degree of compaction greater than or equal to 97% (potentially from the reference "clay_compaction_ML.xlsx" data).
+One-hot encodes the categorical "class%" column in CI data for better model training.
+Creates a new column "encoded_class" by combining one-hot encoded categories into a single string.
+Joins the encoded DataFrame with the original CI DataFrame.
+Performs similar one-hot encoding for the "activity_class" column and creates a combined "encoded_activity" column.
+Keeps the encoded class and activity columns for later use.
+Separates the encoded columns from the original CI data for feeding into the autoencoder.
+Defines a function remove_outliers_std to remove outliers from numeric columns based on standard deviation. Applies this function to the CI data (excluding encoded columns) and reports the number of outliers removed per column.
+Fills missing values (NaNs) in the cleaned CI data with the column means.
+Standardizes the features in the CI data using StandardScaler for better model training.
+Autoencoder model definition:
+
+Defines the best parameters for the autoencoder explicitly (encoding dimension, activation function, optimizer, epochs, and batch size).
+Defines an autoencoder model with the following architecture:
+Input layer with a dimension matching the number of features in the CI data.
+Two hidden layers with 128 neurons each, using ReLU activation for non-linearity.
+Batch normalization layer after the first hidden layer to improve training stability.
+Dropout layer (20%) after the first hidden layer to prevent overfitting.
+A bottleneck layer with a user-defined encoding_dim (number of encoded features) using ReLU activation.
+Two dense layers to reconstruct the input data, mirroring the first half of the model with appropriate dimension changes.
+Output layer with a linear activation to match the original feature scaling.
+Compiles the model using the specified optimizer (e.g., Adam) and mean squared error (MSE) loss function.
+Learning rate scheduling:
+
+Defines several learning rate scheduling functions:
+constant_lr: Constant learning rate (example).
+step_decay: Learning rate decay by a factor at every specified number of epochs.
+exponential_decay: Learning rate decay exponentially with a decay rate.
+Allows the user to choose a learning rate schedule from the defined functions.
+Autoencoder training and evaluation:
+
+Trains the autoencoder on the standardized CI data with a validation split of 20% for monitoring performance during training.
+Predicts on the training data using the trained autoencoder.
+Inverts the standardization to obtain reconstructed data on the original scale.
+Checks for remaining NaNs in the reconstructed data and fills them with 0 if necessary.
+Creates DataFrames for original and reconstructed CI data with appropriate column names.
+Combines the encoded class and activity columns with the original and reconstructed data for a complete picture.
+Calculates and prints the Mean Squared Error (MSE) and Mean Absolute Error (MAE) for each feature between the original and reconstructed values.
+Calculates and prints the R-squared score for each feature (if possible, handling potential errors).
+Visualization:
+
+Creates scatter plots comparing original and reconstructed values for each feature in the CI data (3 features per plot).
+Overlays the R-squared score (or "N/A" if unavailable) on each plot title for reference.
+Creates separate scatter plots for the residuals (difference between original and reconstructed values) for each feature.
+Adds a horizontal line at y=0 (perfect reconstruction) to the residual plots for visualization.
+Note:
+
+This script can be easily modified to use different data sources by changing the filenames in the pd.read_excel calls.
+Experiment with different autoencoder architectures, encoding dimensions, hyperparameters (learning
+
+To combined the data set using either the Neural Network or the Random Forests, use the codes: 06 Combining_NN_general and 07 Combining_RF_general
+the following explanation is about the random forest code:
+Readme for RandomForest_DryDensity_CI.py
+This Python script utilizes a Random Forest Regression model to predict dry density (both Proctor and unit weight) for clay insulation (CI) data based on its water content. It leverages pre-processed data from two Excel files containing compaction data (CC) and clay insulation properties (CI).
+
+Key functionalities:
+
+Data Loading and Preprocessing
+
+Loads data from two Excel files: "CCA.xlsx" (compaction data) and "CIA.xlsx" (clay insulation properties).
+Comments indicate potential filtering and dropping of irrelevant columns from both datasets (not implemented in this version).
+Selects only the "water_content" feature from the compaction data (CC).
+Defines target variables: "dry_density_proctor" and "dry_unit_weight" from the compaction data (CC).
+Splits the compaction data (CC) into training and testing sets using train_test_split with a 20% test size and a fixed random state for reproducibility.
+Standardizes the training features (water content) using StandardScaler (Random Forest doesn't require scaling for target variables).
+Random Forest Model Training
+
+Defines a Random Forest Regressor with specified hyperparameters:
+n_estimators: Number of decision trees (400).
+max_depth: Maximum depth of each tree (50).
+max_features: Number of features considered at each split ("sqrt" for the square root of total features).
+max_samples: Proportion of samples drawn for training each tree (0.85).
+min_samples_leaf: Minimum number of samples per leaf (1).
+min_samples_split: Minimum number of samples required to split a node (2).
+random_state: Random seed for reproducibility (42).
+Trains the Random Forest model on the scaled training features and target variables.
+Model Evaluation
+
+Predicts dry density values for the testing set using the trained model.
+Calculates various evaluation metrics:
+R-squared score (R²) for each target variable.
+Mean Squared Error (MSE) for each target variable.
+Mean Absolute Error (MAE) for each target variable.
+Prints the evaluation metrics for each target variable (dry_density_proctor and dry_unit_weight).
+Residuals Analysis
+
+Creates a visualization with two subplots, one for each target variable.
+For each target variable, calculates the residuals (differences between actual and predicted values).
+Uses Seaborn's histplot to visualize the distribution of residuals for each target variable.
+Titles each subplot with "Residuals for {target_variable_name}".
+Prediction on New Data
+
+Defines water content scenarios with names like "water_content_0.75" (representing different water content values).
+Loops through each water content scenario.
+Temporarily renames the water content column in the CI data to match the scenario name (for clarity).
+Selects the water content feature from the renamed CI data.
+Scales the CI features using the same scaler previously fitted to the compaction data (CC features).
+Makes predictions for the dry density values using the trained Random Forest model on the scaled CI data.
+Assigns the predictions as new columns to the CI data with appropriate names indicating the scenario.
+Saves the combined CI data with predicted dry density values for each scenario to a separate Excel file with a descriptive name.
+Note:
+
+This script assumes the provided compaction data (CC) has features that are relevant for predicting dry density in the clay insulation data (CI).
+The script can be modified to explore different hyperparameter values for the Random Forest model and compare their performance.
+
+to use the optemizined Random Forest or Neural Network, Use: 09 Optemized_RF_general  or 08 optemized_NN_general
+the following explanation are for the RF code:
+The code you provided is for implementing a Random Forest Regression model and visualizing soil data using the Casagrande plasticity chart. Here's a breakdown of the code:
+
+1. Data Loading and Preprocessing:
+
+Imports necessary libraries like pandas, numpy, matplotlib etc.
+Loads four datasets (COMNN, COMRF, COMANN, COMARF) from Excel files.
+Defines columns to drop from the datasets (e.g., 'salt_content', 'organic_content').
+Creates a function clip_and_replace to clip outliers in specific density and unit weight columns for each dataset.
+2. Casagrande Plasticity Chart Functions:
+
+Defines functions to process data for plotting on the Casagrande plasticity chart:
+classify_point: Classifies a data point based on its x and y coordinates (derived from sand and clay content) into predefined areas (Ks1, Kz2, etc.) on the chart.
+process_dataframe: Calculates x, y coordinates and assigns classifications to points based on the defined areas.
+plot_triangle: Plots the triangle with classified points, polygons representing areas, and labels. This function utilizes the shapely library for polygon manipulation and matplotlib for plotting.
+3. Encoding Class Labels:
+
+Defines a function encode_class_column to map the classified area names (e.g., Ks1) to new numerical labels (e.g., 1) for further analysis.
+Applies the encoding function to all four datasets.
+4. New Classification Method:
+
+Defines a function create_classification_plot_with_new_classes to create a new plasticity chart with user-defined classifications.
+This function utilizes a different set of polygons and labels compared to the previous approach.
+It also defines functions for lines A and U used in the chart and creates the base plot with labels and axes.
+Classifies points into the new areas based on their location within the defined polygons.
+Assigns custom colors to each new classification for plotting points.
+Saves the plot as a PNG image with a title-based filename.
+5. Final Steps:
+
+Defines a function new_encode_class_column to map the new classifications to numerical labels similar to the previous encoding step.
+Applies the new encoding function to all four datasets (commented out).
+Overall, the code demonstrates data loading, preprocessing, using the Casagrande plasticity chart for data visualization with two classification methods, and label encoding for further analysis with Random Forest Regression (not implemented in the provided code).
